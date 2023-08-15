@@ -1,0 +1,17 @@
+version: "3.9"
+services:
+  mmdvm_hs:
+    container_name: mmdvm_hs
+    user: 501:20
+    platform: linux/arm/v7
+    build:
+      context: .
+      dockerfile: Dockerfile
+      platforms: 
+        - linux/arm/v7
+      args:
+        TYPE: ZUMspot_RPi
+    volumes:
+      - ./:/artifacts
+    network_mode: none
+    restart: no

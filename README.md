@@ -18,9 +18,9 @@ mmdvm_hs-compiler-docker requires qemu to be installed on a host amd64 system in
 
 Command Line:
 
-1. Install pre-requisites
+1. Install pre-requisites on non-arm systems
    ```console
-   sudo apt install -y qemu binfmt-support qemu-user-static dialog logger
+   sudo apt install -y qemu binfmt-support qemu-user-static
    ```
 
 2. Check out a clone of this repo

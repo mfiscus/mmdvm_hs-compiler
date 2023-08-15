@@ -19,7 +19,7 @@ IFS=$'\n\t'
 readonly script_name=${0##*/}
 
 # tool name
-readonly tool_name="KK7MNZ's Containerized MMDVM_HS Compiler"
+readonly tool_name="KK7MNZ - Containerized ARM MMDVM_HS Compiler"
 
 # get logname
 readonly logname=$( whoami )
@@ -75,8 +75,8 @@ readonly descriptions=(
 # cleanup working copy
 function __cleanup() {
     rm -f ./${hardware_type}-docker-compose.yml
-    dialog --clear
-    clear
+
+    tput sgr0
 
     return
 
@@ -128,8 +128,8 @@ function __print_usage() {
     echo -e "\t-q | --quiet"
     echo -e "\t-v | --verbose"
     echo -e "\nExample usage:"
-    echo -e "\t"${script_name}" --quiet --hardware-type MMDVM_HS_Hat"
-    echo -e "\t"${script_name}" --help"
+    echo -e "\t${script_name} --quiet --hardware-type MMDVM_HS_Hat"
+    echo -e "\t${script_name} --help"
     echo -e "\nHardware types supported:"
     echo -e "\tD2RG_MMDVM_HS generic_gpio MMDVM_HS_Dual_Hat NanoDV_NPI"
     echo -e "\tSkyBridge_RPi ZUMspot_Libre generic_duplex_gpio LoneStar_USB"
@@ -148,17 +148,16 @@ function __get_hardware_type() {
     local options i j
 
     options="
-        dialog 
-            --no-shadow 
-            --cancel-label \"Quit\" 
+        whiptail
             --backtitle \"${tool_name}\" 
-            --menu \"Select hardware type to compile for:\" 16 76 76" 
+            --menu \"Select hardware type to compile for:\" 0 0 0" 
 
     for i in "${!types[@]}"; do
         options+="
             \""${types[${i}]}"\" \""${descriptions[${i}]}"\""
     
     done
+
 
     # strip any trailing slashes
     options=$( echo ${options} | sed 's:\\*$::' )
@@ -176,7 +175,7 @@ function __get_hardware_type() {
 
 # function to confirm selection
 # $1 = hardware type
-__edit_compose_file() {
+__generate_compose_file() {
     if [ $# -eq 1 ]; then
         # declare variables local to this function
         local hardware_type=${1}
@@ -221,7 +220,7 @@ function __mmdvm_hs_compile() {
             docker compose --quiet --file ./${hardware_type}-docker-compose.yml down &>/dev/null
         
         else
-            docker compose --file ./${hardware_type}-docker-compose.yml build 2>&1 | __please_wait "Building Docker container and compiling source code"
+            docker compose --file ./${hardware_type}-docker-compose.yml build 2>&1 | __please_wait "Building Docker container and compiling ${hardware_type} firmware"
             docker compose --file ./${hardware_type}-docker-compose.yml up -d --remove-orphans 2>&1 | __please_wait "Starting Docker container and extracting binary files"
             docker compose --file ./${hardware_type}-docker-compose.yml down 2>&1 | __please_wait "Stopping and removing Docker container"
 
@@ -249,15 +248,12 @@ function __confirm_action() {
         
         
         confirmation="
-            dialog
-                --no-shadow 
-                --clear 
-                --cancel-label \"Cancel\" 
+            whiptail
                 --backtitle \"${tool_name}\" 
-                --inputbox \"Are you sure you want to compile firmware for:\n\n"${hardware_type}"\n\nType CONFIRM: \" 0 0 "
+                --inputbox \"Are you sure you want to compile firmware for:\n\n${hardware_type}\n\nType CONFIRM: \" 0 0 "
         
         
-        # launch dialog and split output into an array
+        # launch whiptail and split output into an array
         # strip any trailing slashes
         confirmation=$( echo ${confirmation} | sed 's:\\*$::' )
 
@@ -302,15 +298,17 @@ function __please_wait() {
     # validate argument
     if [ $# -eq 1 ]; then
         local wait_message=${1}
-        dialog \
-            --keep-window \
-            --no-shadow \
-            --scrollbar \
-            --trim \
-            --sleep 3 \
-            --backtitle "${tool_name}" \
-            --progressbox ${wait_message} 16 76
 
+        tput bold
+        echo -e "\n"${wait_message}"\n"
+        
+        while read -r stream; do
+            echo -e "  ==> "${stream} | grep --color=always "==>"
+
+        done
+
+        sleep 3
+        
     fi
 
 }
@@ -322,10 +320,11 @@ function __done_prompt() {
     # validate argument
     if [ $# -eq 1 ]; then
         local done_message=${1}
-        dialog \
-            --no-shadow \
-            --backtitle "${tool_name}" \
-            --msgbox ${done_message} 8 50
+
+        tput bold
+        tput setaf 2
+
+        echo -e "\n\n"${done_message}"\n"
 
     fi
 
@@ -359,11 +358,11 @@ function __check_dependancy() {
 ####################
 
 # validate dependancies
-readonly -a dependancies=( 'dialog' 'docker' 'logger' )
+readonly -a dependancies=( 'whiptail' 'docker' 'logger' )
 declare -i dependancy=0
 
 while [ "${dependancy}" -lt "${#dependancies[@]}" ]; do
-    __check_dependancy ${dependancies[${dependancy}]} || __throw_error ${dependancies[${dependancy}]}" required" ${?}
+    __check_dependancy ${dependancies[${dependancy}]} || __throw_error "${dependancies[${dependancy}]} required" ${?}
 
     (( ++dependancy ))
 
@@ -450,8 +449,8 @@ if [ -z ${hardware_type:-} ]; then
 fi
 
 if [ ! -z ${quiet:-} ]; then
-    __edit_compose_file ${hardware_type} || __throw_error "Unable to edit compose file for "${hardware_type} 1
-    __mmdvm_hs_compile ${hardware_type} || __throw_error "Unable to compile firmware for "${hardware_type} 1
+    __generate_compose_file ${hardware_type} || __throw_error "Unable to generate compose file for ${hardware_type}" 1
+    __mmdvm_hs_compile ${hardware_type} || __throw_error "Unable to compile firmware for ${hardware_type}" 1
 
 else
     # don't confirm if --hardware-type was specificed on cli
@@ -460,8 +459,8 @@ else
     
     fi
 
-    __edit_compose_file ${hardware_type} || __throw_error "Unable to edit compose file for "${hardware_type} 1
-    __mmdvm_hs_compile ${hardware_type} || __throw_error "Unable to compile firmware for "${hardware_type} 1
+    __generate_compose_file ${hardware_type} || __throw_error "Unable to generate compose file for ${hardware_type}" 1
+    __mmdvm_hs_compile ${hardware_type} || __throw_error "Unable to compile firmware for ${hardware_type}" 1
     __done_prompt "Successfully compiled ${hardware_type} firmware\n\n        ./$( ls -1 ${hardware_type}/*.bin )"
 
 fi
