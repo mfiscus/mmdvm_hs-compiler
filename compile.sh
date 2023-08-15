@@ -324,7 +324,7 @@ function __done_prompt() {
         tput bold
         tput setaf 2
 
-        echo -e "\n\n"${done_message}"\n"
+        echo -e "\n\n\n"${done_message}"\n\n"
 
     fi
 
@@ -454,7 +454,7 @@ if [ ! -z ${quiet:-} ]; then
 
 else
     # don't confirm if --hardware-type was specificed on cli
-    if [ -z ${@:-} ]; then
+    if [[ -z ${@:-} ]]; then
         __confirm_action ${hardware_type}
     
     fi
