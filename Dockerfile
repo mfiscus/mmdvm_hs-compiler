@@ -30,5 +30,5 @@ RUN cd ${MMDVM_HS_INST_DIR} && \
     make
 
 ENTRYPOINT \
-    mkdir -p /artifacts/${TYPE} && \
-    cp -v /src/MMDVM_HS/bin/* /artifacts/${TYPE}/
+    mkdir -p /artifacts && \
+    cp -v /src/MMDVM_HS/bin/mmdvm_*.bin /artifacts/${TYPE}.bin

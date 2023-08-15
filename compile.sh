@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
 
-# This tool was written to wrap docker compose commands
+#   Copyright (C) 2023 by Matt Fiscus KK7MNZ
+
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+#   This tool was written to wrap docker compose commands
 
 # strict mode
 set -Eeuo pipefail
@@ -204,12 +220,12 @@ function __mmdvm_hs_compile() {
         local hardware_type=${1}
 
         if [ ! -z ${quiet:-} ]; then
-            docker compose --quiet --file ./${hardware_type}-docker-compose.yml build &>/dev/null
+            docker compose --quiet --file ./${hardware_type}-docker-compose.yml build --no-cache &>/dev/null
             docker compose --quiet --file ./${hardware_type}-docker-compose.yml up -d --remove-orphans &>/dev/null
             docker compose --quiet --file ./${hardware_type}-docker-compose.yml down &>/dev/null
         
         else
-            docker compose --file ./${hardware_type}-docker-compose.yml build 2>&1 | __please_wait "Building Docker container and compiling ${hardware_type} firmware"
+            docker compose --file ./${hardware_type}-docker-compose.yml build --no-cache 2>&1 | __please_wait "Building Docker container and compiling ${hardware_type} firmware"
             docker compose --file ./${hardware_type}-docker-compose.yml up -d --remove-orphans 2>&1 | __please_wait "Starting Docker container and extracting binary files"
             docker compose --file ./${hardware_type}-docker-compose.yml down 2>&1 | __please_wait "Stopping and removing Docker container"
 
@@ -450,7 +466,7 @@ else
 
     __generate_compose_file ${hardware_type} || __throw_error "Unable to generate compose file for ${hardware_type}" 1
     __mmdvm_hs_compile ${hardware_type} || __throw_error "Unable to compile firmware for ${hardware_type}" 1
-    __done_prompt "Successfully compiled ${hardware_type} firmware\n\n        ./$( ls -1 ${hardware_type}/*.bin )"
+    __done_prompt "Successfully compiled ${hardware_type} firmware\n\n\t${hardware_type}.bin"
 
 fi
 
