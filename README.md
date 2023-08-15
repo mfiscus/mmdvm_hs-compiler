@@ -1,4 +1,4 @@
-# MMDVM_HS Automated Compiler Docker Image
+# MMDVM_HS Automated Compiler ARM Docker Image
 
 This Ubuntu Linux based Docker image allows you to compile [g4klx's](https://github.com/g4klx) [MMDVM_HS](https://github.com/g4klx/MMDVM_HS) without having to configure any files.
 
