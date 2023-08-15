@@ -25,7 +25,7 @@ Command Line:
 
 2. Check out a clone of this repo
    ```console
-   git clone https://github.com/mfiscus/mmdvm_hs-compiler-docker.git && cd mmdvm_hs-compiler-docker
+   git clone https://github.com/mfiscus/mmdvm_hs-compiler.git && cd mmdvm_hs-compiler
    ```
 
 3. Make script executable
