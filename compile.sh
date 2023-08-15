@@ -152,7 +152,7 @@ function __get_hardware_type() {
             --no-shadow 
             --cancel-label \"Quit\" 
             --backtitle \"${tool_name}\" 
-            --menu \"Select hardware type to compile for:\" 20 70 70" 
+            --menu \"Select hardware type to compile for:\" 16 76 76" 
 
     for i in "${!types[@]}"; do
         options+="
@@ -309,7 +309,7 @@ function __please_wait() {
             --trim \
             --sleep 3 \
             --backtitle "${tool_name}" \
-            --progressbox ${wait_message} 20 90
+            --progressbox ${wait_message} 16 76
 
     fi
 
