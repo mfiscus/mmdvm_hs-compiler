@@ -49,9 +49,9 @@ Command Line:
    
    Hardware types supported:
        D2RG_MMDVM_HS generic_gpio MMDVM_HS_Dual_Hat NanoDV_NPI
-       SkyBridge_RPi ZUMspot_Libre generic_duplex_gpio
-       MMDVM_HS_Hat-12mhz ZUMspot_dualband ZUMspot_RPi
-       MMDVM_HS_Dual_Hat-12mhz MMDVM_HS_Hat Nano_hotSPOT ZUMspot_duplex
+	   SkyBridge_RPi generic_duplex_gpio MMDVM_HS_Hat-12mhz
+	   ZUMspot_dualband ZUMspot_RPi MMDVM_HS_Dual_Hat-12mhz
+	   MMDVM_HS_Hat Nano_hotSPOT ZUMspot_duplex
 
     ```
 

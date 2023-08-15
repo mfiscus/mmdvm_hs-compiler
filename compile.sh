@@ -31,7 +31,6 @@ readonly types=(
     "MMDVM_HS_Dual_Hat"
     "NanoDV_NPI"
     "SkyBridge_RPi"
-    "ZUMspot_Libre"
     "generic_duplex_gpio"
     "MMDVM_HS_Hat-12mhz"
     "ZUMspot_dualband"
@@ -51,7 +50,6 @@ readonly descriptions=(
     "MMDVM_HS_Dual_Hat revisions 1.0 (DB9MAT & DF2ET & DO7EN)"
     "NanoDV NPi revisions 1.1 (BG4TGO & BG5HHP)"
     "BridgeCom SkyBridge HotSpot"
-    "Libre Kit board or any homebrew hotspot with modified RF7021SE and Blue Pill STM32F103"
     "Libre Kit board or any homebrew hotspot with modified RF7021SE and Blue Pill STM32F103"
     "MMDVM_HS_Hat revisions 1.1, 1.2 and 1.4 (DB9MAT & DF2ET) 12mHz"
     "ZUMspot RPi"
@@ -124,9 +122,9 @@ function __print_usage() {
     echo -e "\t${script_name} --help"
     echo -e "\nHardware types supported:"
     echo -e "\tD2RG_MMDVM_HS generic_gpio MMDVM_HS_Dual_Hat NanoDV_NPI"
-    echo -e "\tSkyBridge_RPi ZUMspot_Libre generic_duplex_gpio"
-    echo -e "\tMMDVM_HS_Hat-12mhz ZUMspot_dualband ZUMspot_RPi"
-    echo -e "\tMMDVM_HS_Dual_Hat-12mhz MMDVM_HS_Hat Nano_hotSPOT ZUMspot_duplex"
+    echo -e "\tSkyBridge_RPi generic_duplex_gpio MMDVM_HS_Hat-12mhz"
+    echo -e "\tZUMspot_dualband ZUMspot_RPi MMDVM_HS_Dual_Hat-12mhz"
+    echo -e "\tMMDVM_HS_Hat Nano_hotSPOT ZUMspot_duplex"
     
     return
 
