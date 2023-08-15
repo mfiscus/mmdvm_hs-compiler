@@ -221,8 +221,8 @@ function __mmdvm_hs_compile() {
             docker compose --quiet --file ./${hardware_type}-docker-compose.yml down &>/dev/null
         
         else
-            docker compose --file ./${hardware_type}-docker-compose.yml build 2>&1 | __please_wait "Building Docker container"
-            docker compose --file ./${hardware_type}-docker-compose.yml up -d --remove-orphans 2>&1 | __please_wait "Starting Docker container"
+            docker compose --file ./${hardware_type}-docker-compose.yml build 2>&1 | __please_wait "Building Docker container and compiling source code"
+            docker compose --file ./${hardware_type}-docker-compose.yml up -d --remove-orphans 2>&1 | __please_wait "Starting Docker container and extracting binary files"
             docker compose --file ./${hardware_type}-docker-compose.yml down 2>&1 | __please_wait "Stopping and removing Docker container"
 
         fi
@@ -307,7 +307,7 @@ function __please_wait() {
             --no-shadow \
             --scrollbar \
             --trim \
-            --sleep 2 \
+            --sleep 3 \
             --backtitle "${tool_name}" \
             --progressbox ${wait_message} 20 90
 
@@ -460,8 +460,8 @@ else
     
     fi
 
-    __edit_compose_file ${hardware_type} && \
-    __mmdvm_hs_compile ${hardware_type} && \
+    __edit_compose_file ${hardware_type} || __throw_error "Unable to edit compose file for "${hardware_type} 1
+    __mmdvm_hs_compile ${hardware_type} || __throw_error "Unable to compile firmware for "${hardware_type} 1
     __done_prompt "Successfully compiled ${hardware_type} firmware\n\n        ./$( ls -1 ${hardware_type}/*.bin )"
 
 fi
