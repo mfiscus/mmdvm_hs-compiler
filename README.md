@@ -19,21 +19,42 @@ mmdvm_hs-compiler-docker requires qemu to be installed on a host amd64 system in
 Command Line:
 
 1. Install pre-requisites
-   ```bash
+   ```console
    sudo apt install -y qemu binfmt-support qemu-user-static dialog logger
    ```
 
 2. Check out a clone of this repo
-   ```bash
+   ```console
    git clone https://github.com/mfiscus/mmdvm_hs-compiler-docker.git && cd mmdvm_hs-compiler-docker
    ```
 
 3. Make script executable
-   ```bash
+   ```console
    chmod +x compile.sh
    ```
 
 4. Run `./compile.sh --help`
+
+    ```console
+    
+    Usage options:
+    	-h | --help
+    	-t | --hardware-type <hardware type>
+    	-q | --quiet
+    	-v | --verbose
+    
+    Example usage:
+    	compile.sh --quiet --hardware-type MMDVM_HS_Hat
+    	compile.sh --help
+    
+    Hardware types supported:
+    	D2RG_MMDVM_HS generic_gpio MMDVM_HS_Dual_Hat NanoDV_NPI
+    	SkyBridge_RPi ZUMspot_Libre generic_duplex_gpio LoneStar_USB
+    	MMDVM_HS_Hat-12mhz NanoDV_USB ZUMspot_dualband ZUMspot_RPi
+    	generic_duplex_usb MMDVM_HS_Dual_Hat-12mhz MMDVM_HS_Hat
+    	Nano_hotSPOT ZUMspot_duplex ZUMspot_USB
+
+    ```
 
 ## License
 
