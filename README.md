@@ -12,7 +12,7 @@ This is a single-arch image and will only run on arm devices.
 
 mmdvm_hs-compiler-docker requires qemu to be installed on a host amd64 system in order to be able to compile arm/v7 binaries compatible with raspberry pi. This is already installed with Docker for Mac on Apple Silicon (M1/M2) computers.
 
-**This utility will only work when using [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/) or [Docker for Mac](https://docs.docker.com/desktop/install/mac-install/)
+**This utility will only work when using [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/) or [Docker for Mac](https://docs.docker.com/desktop/install/mac-install/) (AFAIK)
 
 ## Usage
 
