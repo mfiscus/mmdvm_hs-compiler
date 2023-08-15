@@ -1,65 +1,33 @@
 # MMDVM_HS Automated Compiler Docker Image
 
-This Ubuntu Linux based Docker image allows you to run [LX3JL's](https://github.com/LX3JL) [AMBEd](https://github.com/LX3JL/xlxd/tree/master/ambed) without having to compile any code.
+This Ubuntu Linux based Docker image allows you to compile [g4klx's](https://github.com/g4klx) [MMDVM_HS](https://github.com/g4klx/MMDVM_HS) without having to configure any files.
 
-This is a currently a single-arch image and will only run on amd64 devices.
+This is a single-arch image and will only run on arm devices.
 
 | Image Tag             | Architectures           | Base Image         | 
 | :-------------------- | :-----------------------| :----------------- | 
-| latest, ubuntu        | arm64                   | Ubuntu 22.04       | 
+| latest, ubuntu        | arm/v7                  | Ubuntu 22.04       | 
 
 ## Compatibility
 
-ambed-docker requires full access to your local devices to access AMBE vocoder usb dongles which can be achieved using the ```--priviliged``` flag.
+mmdvm_hs-compiler-docker requires qemu to be installed on a host amd64 system in order to be able to compile arm/v7 binaries compatible with raspberry pi. This is already installed with Docker for Mac on Apple Silicon (M1/M2) computers.
 
-Intended to run along side [xlxd-docker](https://github.com/mfiscus/xlxd-docker)
-
-**This image will only work when using [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/)
+**This utility will only work when using [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/) or [Docker for Mac](https://docs.docker.com/desktop/install/mac-install/)
 
 ## Usage
 
 Command Line:
 
 ```bash
-docker run --privileged --name=ambed mfiscus/ambed:latest
+git clone https://github.com/mfiscus/mmdvm_hs-compiler-docker.git
+cd mmdvm_hs-compiler-docker
+./compile.sh --help
 ```
-
-Using [Docker Compose](https://docs.docker.com/compose/) (recommended):
-
-```yml
-version: '3.8'
-
-networks:
-  proxy:
-    driver: bridge
-    ipam:
-      driver: default
-      config:
-        - subnet: "10.0.0.0/24"
-          gateway: "10.0.0.1"
-          ip_range: "10.0.0.0/24"
-
-services:
-  ambed:
-    image: mfiscus/ambed:latest
-    container_name: ambed
-    hostname: ambed_container
-    networks:
-      - proxy
-    privileged: true # Necessary for accessing AMBE usb dongle(s)
-    restart: unless-stopped
-```
-
-## Parameters
-
-The parameters are split into two halves, separated by a colon, the left hand side representing the host and the right the container side.
-
-* `--privileged` - Shares host devices with container, **required**
 
 ## License
 
-Copyright (C) 2016 Jean-Luc Deltombe LX3JL and Luc Engelmann LX1IQ 
-Copyright (C) 2023 mfiscus
+Copyright (C) 2017 Jonathan Naylor G4KLX and Andy CA6JAU
+Copyright (C) 2023 Matt Fiscus KK7MNZ
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
