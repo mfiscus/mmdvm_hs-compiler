@@ -15,8 +15,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
         gdb-arm-none-eabi \
         git \
         libstdc++-arm-none-eabi-newlib \
-        libnewlib-arm-none-eabi \
-        vim
+        libnewlib-arm-none-eabi
 
 # Setup directories
 RUN mkdir -p ${MMDVM_HS_INST_DIR}
