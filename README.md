@@ -74,7 +74,7 @@ Command Line:
 
 1. Run `./compile.sh --hardware-type MMDVM_HS_Hat`  
 
-2. By defining the hardware type as an argument the firmware will immediately begin to compile
+2. By defining the hardware type as an argument the firmware will immediately begin to compile.
 
     ![non-interactive](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/non-interactive.png)  
 
