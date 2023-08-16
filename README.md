@@ -12,7 +12,7 @@ This creates an ARM image to comiple the firemware in.
 
 mmdvm_hs-compiler requires Docker and qemu to be installed on a host amd64 system in order to be able to compile arm/v7 binaries compatible with Raspberry Pi pi-star software. Qemu is already installed with Docker for Mac on Apple Silicon (M1/M2) computers.
 
-**This utility will only work when using [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/) or [Docker for Mac](https://docs.docker.com/desktop/install/mac-install/). It should work on Windows with WSL installed, but I have not tested that configuration.
+**This utility will work when using [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/) or [Docker for Mac](https://docs.docker.com/desktop/install/mac-install/). It should work on Windows with WSL installed, but I have not tested that configuration.
 
 ## Usage
 
