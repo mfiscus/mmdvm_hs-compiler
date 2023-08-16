@@ -52,9 +52,19 @@ Command Line:
 
 ## Example A - Menu Driven Experience
 
-1. Run `./compile.sh` with no arguments
+1. Run `./compile.sh` with no arguments  
 
-![](https://github.com/mfiscus/mmdvm_hs-compiler/raw/master/images/main-menu.png)
+2. Use arrows keys to select hardware type. Press Enter.  
+
+![](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/main-menu.png)  
+
+3. This operation can take a while so if you are certain you selected the correct firmware, Type CONFIRM and Press Enter.  
+
+![](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/confirm.png)  
+
+4. Once the firmware has finish compiling, the binary artifact will be copied to current working directory.  
+
+![](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/done.png)   
 
 ## License
 
