@@ -1,4 +1,4 @@
-# MMDVM_HS Automated Compiler ARM Docker Image
+ # MMDVM_HS Automated Compiler ARM Docker Image
 
 This Ubuntu Linux based Docker image allows you to compile [G4KLX's](https://github.com/g4klx) [MMDVM_HS](https://github.com/g4klx/MMDVM_HS) fork without having to configure any files.
 
@@ -12,7 +12,7 @@ This creates an ARM image to comiple the firemware in.
 
 mmdvm_hs-compiler requires Docker and qemu to be installed on a host amd64 system in order to be able to compile arm/v7 binaries compatible with Raspberry Pi pi-star software. Qemu is already installed with Docker for Mac on Apple Silicon (M1/M2) computers.
 
-**This utility will only work when using [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/) or [Docker for Mac](https://docs.docker.com/desktop/install/mac-install/). It should work on Windows with WSL installed, but I have not tested that configuration.
+**This utility will work when using [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/) or [Docker for Mac](https://docs.docker.com/desktop/install/mac-install/). It should work on Windows with WSL installed, but I have not tested that configuration.
 
 ## Usage
 
@@ -62,11 +62,11 @@ Command Line:
   
     ![confirm](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/confirm.png)  
 
-4. This operation can take a while depending upon your system. Be patient.
+4. This operation can take a while depending upon your system. Sit back and relax, it's automated ;)
 
     ![compile](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/compile.png)  
 
-5. Once the firmware has finish compiling, the binary artifact will be copied to current working directory.  
+5. Once the firmware has finished compiling, the binary artifact will be copied to current working directory.  
 
     ![done](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/done.png)  
 
