@@ -1,4 +1,4 @@
-# MMDVM_HS Automated Compiler ARM Docker Image
+ # MMDVM_HS Automated Compiler ARM Docker Image
 
 This Ubuntu Linux based Docker image allows you to compile [G4KLX's](https://github.com/g4klx) [MMDVM_HS](https://github.com/g4klx/MMDVM_HS) fork without having to configure any files.
 
@@ -62,7 +62,7 @@ Command Line:
   
     ![confirm](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/confirm.png)  
 
-4. This operation can take a while depending upon your system. Be patient.
+4. This operation can take a while depending upon your system. Sit back and relax, it's automated ;)
 
     ![compile](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/compile.png)  
 
