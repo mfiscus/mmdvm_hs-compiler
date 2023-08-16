@@ -10,7 +10,7 @@ This creates an ARM image to comiple the firemware in.
 
 ## Compatibility
 
-mmdvm_hs-compiler requires Docker and qemu to be installed on a host amd64 system in order to be able to compile arm/v7 binaries compatible with Raspberry Pi pi-star software. Qemu is already installed with Docker for Mac on Apple Silicon (M1/M2) computers.
+mmdvm_hs-compiler requires Docker and qemu to be installed on a host amd64 system in order to be able to compile arm/v7 binaries compatible with Raspberry Pi [pi-star](https://www.pistar.uk) or [W0CHP-PiStar-Dash](https://w0chp.net/w0chp-pistar-dash/) software. 
 
 **This utility will work when using [Docker for Linux](https://docs.docker.com/desktop/install/linux-install/) or [Docker for Mac](https://docs.docker.com/desktop/install/mac-install/). It should work on Windows with WSL installed, but I have not tested that configuration.
 
@@ -83,6 +83,27 @@ Command Line:
 2. By defining the hardware type as an argument the firmware will immediately begin to compile.
 
     ![non-interactive](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/non-interactive.png)  
+
+## Flashing Firmware on pi-star
+
+1. Copy firmware to Raspberry Pi (your hostname may vary)  
+    ```console
+    scp ./MMDVM_HS_Hat.bin pi-star@pi-star.local:/home/pi-star/
+    ```  
+
+2. Connect to pi-star
+    ```console
+    ssh pi-star@pi-star.local
+    ```
+
+3. Flash custom firmware
+    ```console
+    sudo pistar-mmdvmhshatflash-custom ./MMDVM_HS_Hat.bin
+    ```  
+
+    ![firmware-flash](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/firmware-flash.png)  
+
+4. Press Enter to reboot pi-star.
 
 
 ## License
