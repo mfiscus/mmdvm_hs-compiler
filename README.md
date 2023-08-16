@@ -1,9 +1,3 @@
-<style type="text/css">
-    img {
-        width: 50%;
-    }
-</style>
-
 # MMDVM_HS Automated Compiler ARM Docker Image
 
 This Ubuntu Linux based Docker image allows you to compile [G4KLX's](https://github.com/g4klx) [MMDVM_HS](https://github.com/g4klx/MMDVM_HS) fork without having to configure any files.
