@@ -1,3 +1,9 @@
+<style type="text/css">
+    img {
+        width: 50%;
+    }
+</style>
+
 # MMDVM_HS Automated Compiler ARM Docker Image
 
 This Ubuntu Linux based Docker image allows you to compile [G4KLX's](https://github.com/g4klx) [MMDVM_HS](https://github.com/g4klx/MMDVM_HS) fork without having to configure any files.
@@ -56,15 +62,28 @@ Command Line:
 
 2. Use arrows keys to select hardware type. Press Enter.  
 
-![](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/main-menu.png)  
+    ![main-menu](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/main-menu.png)
 
-3. This operation can take a while so if you are certain you selected the correct firmware, Type CONFIRM and Press Enter.  
+3. If you are certain you selected the correct firmware, Type CONFIRM and Press Enter.  
+  
+    ![confirm](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/confirm.png)  
 
-![](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/confirm.png)  
+4. This operation can take a while depending upon your system. Be patient.
 
-4. Once the firmware has finish compiling, the binary artifact will be copied to current working directory.  
+    ![compile](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/compile.png)  
 
-![](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/done.png)   
+5. Once the firmware has finish compiling, the binary artifact will be copied to current working directory.  
+
+    ![done](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/done.png)  
+
+## Example B - Non-Interactive
+
+1. Run `./compile.sh --hardware-type MMDVM_HS_Hat`  
+
+2. By defining the hardware type as an argument the firmware will immediatly begin to compile
+
+    ![non-interactive](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/non-interactive.png)  
+
 
 ## License
 
