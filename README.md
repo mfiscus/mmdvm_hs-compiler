@@ -18,13 +18,13 @@ mmdvm_hs-compiler requires Docker and qemu to be installed on a host amd64 syste
 
 Command Line:
 
-1. Install pre-requisites on non-arm systems
-    #### Debian based linux
+1. Install pre-requisites
+    #### Debian (x86/amd64) based linux
    ```console
    sudo apt install -y qemu binfmt-support qemu-user-static
    ```  
 
-    #### MacOS [Homebrew](https://brew.sh)
+    #### MacOS [Homebrew](https://brew.sh) (qemu not needed on M1/M2 machines)
    ```console
    brew install newt qemu
    ```
