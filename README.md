@@ -66,7 +66,7 @@ Command Line:
 
     ![compile](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/compile.png)  
 
-5. Once the firmware has finish compiling, the binary artifact will be copied to current working directory.  
+5. Once the firmware has finished compiling, the binary artifact will be copied to current working directory.  
 
     ![done](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/done.png)  
 
