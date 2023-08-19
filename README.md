@@ -19,7 +19,7 @@ mmdvm_hs-compiler requires Docker and qemu to be installed on a host amd64 syste
 Command Line:
 
 1. Install pre-requisites
-    #### Debian (x86/amd64) based linux
+    #### Debian (x86/amd64) based linux (qemu not needed on arm machines)
    ```console
    sudo apt install -y qemu binfmt-support qemu-user-static
    ```  
@@ -72,7 +72,7 @@ Command Line:
 
     ![compile](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/compile.png)  
 
-5. Once the firmware has finished compiling, the binary artifact will be extracted from the container to current working directory. The container will then be stopped and removed.  
+5. Once the firmware has finished compiling, the binary artifact will be extracted from the container to the current working directory. The container will then be stopped and removed.  
 
     ![done](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/done.png)  
 
