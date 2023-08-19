@@ -105,6 +105,8 @@ Command Line:
 
 4. Press Enter to reboot pi-star.
 
+5. Have fun using [M17](https://m17project.org)!
+
 
 ## License
 
