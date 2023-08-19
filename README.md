@@ -72,7 +72,7 @@ Command Line:
 
     ![compile](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/compile.png)  
 
-5. Once the firmware has finished compiling, the binary artifact will be extracted from the container to current working directory. The container will then be stopped and removed.  
+5. Once the firmware has finished compiling, the binary artifact will be extracted from the container to the current working directory. The container will then be stopped and removed.  
 
     ![done](https://raw.githubusercontent.com/mfiscus/mmdvm_hs-compiler/main/images/done.png)  
 
