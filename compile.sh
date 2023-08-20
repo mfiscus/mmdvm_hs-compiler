@@ -16,7 +16,8 @@
 #   along with this program; if not, write to the Free Software
 #   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-#   This tool was written to wrap docker compose commands
+#   This tool was written to automatically compile G4KLX's fork of
+#   MMDVM_HS to easily prepare a pi-star hotspot for M17
 
 # strict mode
 set -Eeuo pipefail
@@ -30,8 +31,15 @@ IFS=$'\n\t'
 # set TERM to xterm if not already set
 [[ ${TERM} =~ ^xterm.* ]] || export TERM="xterm"
 
+# define dependencies array
+readonly -a dependencies=(
+    'whiptail'
+    'docker'
+    'logger'
+
+)
+
 # script name
-#readonly script_name=$( echo ${0##*/} | sed 's/\.sh*$//' )
 readonly script_name=${0##*/}
 
 # tool name
@@ -41,47 +49,49 @@ readonly tool_name="KK7MNZ - Containerized ARM MMDVM_HS Compiler"
 readonly logname=$( whoami )
 
 # hardware types
-readonly types=(
-    "D2RG_MMDVM_HS"
-    "generic_gpio"
-    "MMDVM_HS_Dual_Hat"
-    "NanoDV_NPI"
-    "SkyBridge_RPi"
-    "generic_duplex_gpio"
-    "MMDVM_HS_Hat-12mhz"
-    "ZUMspot_dualband"
-    "ZUMspot_RPi"
-    "MMDVM_HS_Dual_Hat-12mhz"
-    "MMDVM_HS_Hat"
-    "Nano_hotSPOT"
-    "ZUMspot_duplex"
+readonly -a types=(
+    'D2RG_MMDVM_HS'
+    'generic_gpio'
+    'MMDVM_HS_Dual_Hat'
+    'NanoDV_NPI'
+    'SkyBridge_RPi'
+    'generic_duplex_gpio'
+    'MMDVM_HS_Hat-12mhz'
+    'ZUMspot_dualband'
+    'ZUMspot_RPi'
+    'MMDVM_HS_Dual_Hat-12mhz'
+    'MMDVM_HS_Hat'
+    'Nano_hotSPOT'
+    'ZUMspot_duplex'
 
 )
 
 
 # hardware descriptions
-readonly descriptions=(
-    "D2RG MMDVM_HS RPi (BG3MDO, VE2GZI, CA6JAU)"
-    "Libre Kit board or any homebrew hotspot with modified RF7021SE and Blue Pill STM32F103"
-    "MMDVM_HS_Dual_Hat revisions 1.0 (DB9MAT & DF2ET & DO7EN)"
-    "NanoDV NPi revisions 1.1 (BG4TGO & BG5HHP)"
-    "BridgeCom SkyBridge HotSpot"
-    "Libre Kit board or any homebrew hotspot with modified RF7021SE and Blue Pill STM32F103"
-    "MMDVM_HS_Hat revisions 1.1, 1.2 and 1.4 (DB9MAT & DF2ET) 12mHz"
-    "ZUMspot RPi"
-    "ZUMspot RPi"
-    "MMDVM_HS_Dual_Hat revisions 1.0 (DB9MAT & DF2ET & DO7EN)"
-    "MMDVM_HS_Hat revisions 1.1, 1.2 and 1.4 (DB9MAT & DF2ET) 14mHz"
-    "Nano hotSPOT (BI7JTA)"
-    "ZUMspot RPi"
+readonly -a descriptions=(
+    'D2RG MMDVM_HS RPi (BG3MDO, VE2GZI, CA6JAU)'
+    'Libre Kit board or any homebrew hotspot with modified RF7021SE and Blue Pill STM32F103'
+    'MMDVM_HS_Dual_Hat revisions 1.0 (DB9MAT & DF2ET & DO7EN)'
+    'NanoDV NPi revisions 1.1 (BG4TGO & BG5HHP)'
+    'BridgeCom SkyBridge HotSpot'
+    'Libre Kit board or any homebrew hotspot with modified RF7021SE and Blue Pill STM32F103'
+    'MMDVM_HS_Hat revisions 1.1, 1.2 and 1.4 (DB9MAT & DF2ET) 12mHz'
+    'ZUMspot RPi'
+    'ZUMspot RPi'
+    'MMDVM_HS_Dual_Hat revisions 1.0 (DB9MAT & DF2ET & DO7EN)'
+    'MMDVM_HS_Hat revisions 1.1, 1.2 and 1.4 (DB9MAT & DF2ET) 14mHz'
+    'Nano hotSPOT (BI7JTA)'
+    'ZUMspot RPi'
 
 )
 
 
-# cleanup working copy
+# Put things back to the way they were before we found them
 function __cleanup() {
+    # remove temporary dynamically generated docker compose file
     rm -f ./${hardware_type}-docker-compose.yml
 
+    # reset terminal colors
     tput sgr0
 
     return
@@ -119,8 +129,6 @@ function __throw_error() {
 
 }
 
-
-# interpret command-line arguments
 
 # usage
 function __print_usage() {
@@ -220,13 +228,13 @@ function __mmdvm_hs_compile() {
         local hardware_type=${1}
 
         if [ ! -z ${quiet:-} ]; then
-            docker compose --quiet --file ./${hardware_type}-docker-compose.yml build --no-cache &>/dev/null
-            docker compose --quiet --file ./${hardware_type}-docker-compose.yml up -d --remove-orphans &>/dev/null
+            docker compose --quiet --file ./${hardware_type}-docker-compose.yml build --pull --no-cache &>/dev/null
+            docker compose --quiet --file ./${hardware_type}-docker-compose.yml up --remove-orphans &>/dev/null
             docker compose --quiet --file ./${hardware_type}-docker-compose.yml down &>/dev/null
         
         else
-            docker compose --file ./${hardware_type}-docker-compose.yml build --no-cache 2>&1 | __please_wait "Building Docker container and compiling ${hardware_type} firmware"
-            docker compose --file ./${hardware_type}-docker-compose.yml up -d --remove-orphans 2>&1 | __please_wait "Starting Docker container and extracting binary files"
+            docker compose --file ./${hardware_type}-docker-compose.yml build --pull --no-cache 2>&1 | __please_wait "Building Docker container and compiling ${hardware_type} firmware"
+            docker compose --file ./${hardware_type}-docker-compose.yml up --remove-orphans 2>&1 | __please_wait "Starting Docker container and extracting binary files"
             docker compose --file ./${hardware_type}-docker-compose.yml down 2>&1 | __please_wait "Stopping and removing Docker container"
 
         fi
@@ -275,7 +283,6 @@ function __confirm_action() {
             "confirm") # positive confirmation
                 # just in case the object has a null property
                 if [ -n "${choice[0]:-}" ]; then
-                    # return true
                     return 0
                     
                 else
@@ -336,14 +343,14 @@ function __done_prompt() {
 }
 
 
-# check for dependancies
-# ${1} = dependancy
-function __check_dependancy() {
+# check for dependencies
+# ${1} = dependency
+function __check_dependency() {
     if [ ${#} -eq 1 ]; then
-        local dependancy=${1}
+        local dependency=${1}
         local exit_code=${null:-}
 
-        type ${dependancy} &>/dev/null; exit_code=${?}
+        type ${dependency} &>/dev/null; exit_code=${?}
         
         if [ ${exit_code} -ne 0 ]; then
             return 255
@@ -362,23 +369,23 @@ function __check_dependancy() {
 ### main program ###
 ####################
 
-# validate dependancies
-readonly -a dependancies=( 'whiptail' 'docker' 'logger' )
-declare -i dependancy=0
+# validate dependencies
+declare -i dependency=0
 
-while [ "${dependancy}" -lt "${#dependancies[@]}" ]; do
-    __check_dependancy ${dependancies[${dependancy}]} || __throw_error "${dependancies[${dependancy}]} required" ${?}
+while [ "${dependency}" -lt "${#dependencies[@]}" ]; do
+    __check_dependency ${dependencies[${dependency}]} || __throw_error "${dependencies[${dependency}]} required" ${?}
 
-    (( ++dependancy ))
+    (( ++dependency ))
 
 done
 
-unset dependancy
+unset dependency
 
 
 # make sure we're using least bash 4 for proper support of associative arrays
 [ $( echo ${BASH_VERSION} | grep -o '^[0-9]' ) -ge 4 ] || __throw_error "Please upgrade to at least bash version 4" ${?}
 
+# Interpret command-line arguments
 
 # Transform long options to short ones
 for argv in "${@}"; do
@@ -449,7 +456,9 @@ done
 
 # prompt user to select hardware type if --hardware-type wasn't specificed as parameter
 if [ -z ${hardware_type:-} ]; then
-    hardware_type=$( __get_hardware_type ) || __throw_error "Unable to get hardware type" 1
+    hardware_type=$( __get_hardware_type )
+    # If we still don't have a harware type, then user canceled
+    [ -z ${hardware_type:-} ] && __cleanup && exit 0
 
 fi
 
@@ -460,7 +469,7 @@ if [ ! -z ${quiet:-} ]; then
 else
     # don't confirm if --hardware-type was specificed on cli
     if [[ -z ${@:-} ]]; then
-        __confirm_action ${hardware_type}
+        __confirm_action ${hardware_type} || __throw_error "Unable to confirm hardware type selection" 1
     
     fi
 
