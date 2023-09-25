@@ -2,7 +2,7 @@
 
 This Ubuntu Linux based Docker image allows you to compile [G4KLX's](https://github.com/g4klx) [MMDVM_HS](https://github.com/g4klx/MMDVM_HS) fork without having to configure any files.
 
-This creates an ARM image to comiple the firemware in.
+This creates an ARM image to compile the firmware in.
 
 | Image Tag             | Architectures           | Base Image         | 
 | :-------------------- | :-----------------------| :----------------- | 
